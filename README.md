@@ -8,8 +8,8 @@ Coded with Python using Pygame library.
 - Add scoring board
 - Openning screen with start button and scoring board button
 - 3 levels of difficulty:
-    Basic - as is
-    Medium - the speed of the snake increases
-    Hard - the speed of the snake increases & bomb baits
+    - Basic - as is
+    - Medium - the speed of the snake increases
+    - Hard - the speed of the snake increases & bomb baits
 - Desktop icon
 
