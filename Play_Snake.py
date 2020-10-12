@@ -45,31 +45,33 @@ class Snake:
         self.dirny = 1
 
     def move(self):
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                pygame.quit()
+        # for event in pygame.event.get():
+        #     if event.type == pygame.QUIT:
+        #         pygame.quit()
+        #         break
+        #
+        # pygame.init()
+        keys = pygame.key.get_pressed()
+        for key in keys:
+            if keys[pygame.K_LEFT]:
+                self.dirnx = -1
+                self.dirny = 0
+                self.turns[self.head.pos[:]] = [self.dirnx, self.dirny]
 
-            keys = pygame.key.get_pressed()
-            for key in keys:
-                if keys[pygame.K_LEFT]:
-                    self.dirnx = -1
-                    self.dirny = 0
-                    self.turns[self.head.pos[:]] = [self.dirnx, self.dirny]
+            elif keys[pygame.K_RIGHT]:
+                self.dirnx = 1
+                self.dirny = 0
+                self.turns[self.head.pos[:]] = [self.dirnx, self.dirny]
 
-                elif keys[pygame.K_RIGHT]:
-                    self.dirnx = 1
-                    self.dirny = 0
-                    self.turns[self.head.pos[:]] = [self.dirnx, self.dirny]
+            elif keys[pygame.K_UP]:
+                self.dirnx = 0
+                self.dirny = -1
+                self.turns[self.head.pos[:]] = [self.dirnx, self.dirny]
 
-                elif keys[pygame.K_UP]:
-                    self.dirnx = 0
-                    self.dirny = -1
-                    self.turns[self.head.pos[:]] = [self.dirnx, self.dirny]
-
-                elif keys[pygame.K_DOWN]:
-                    self.dirnx = 0
-                    self.dirny = 1
-                    self.turns[self.head.pos[:]] = [self.dirnx, self.dirny]
+            elif keys[pygame.K_DOWN]:
+                self.dirnx = 0
+                self.dirny = 1
+                self.turns[self.head.pos[:]] = [self.dirnx, self.dirny]
         for i, c in enumerate(self.body):
             p = c.pos[:]
             if p in self.turns:
@@ -164,7 +166,8 @@ def message_box(subject, content):
         pass
 
 def main():
-    global width, rows, s, snack
+    global width, rows, s, snack, flag
+    pygame.init()
     width = 500
     rows = 20
     window = pygame.display.set_mode((width, width))
@@ -176,6 +179,7 @@ def main():
 
     flag = True
     while flag:
+        redrawWindow(window)
         pygame.time.delay(50)
         clock.tick(10)
         s.move()
@@ -189,7 +193,13 @@ def main():
                 message_box('You Lost!', 'Press OK to play again')
                 s.reset((10,10))
                 break
-        redrawWindow(window)
+
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                flag = False
+                break
+
 
 main()
 
